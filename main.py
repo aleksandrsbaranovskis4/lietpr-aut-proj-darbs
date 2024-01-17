@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 from openpyxl import Workbook
 from dotenv import load_dotenv, set_key
 import getpass
@@ -13,7 +12,6 @@ def calenderScrape():
     service = Service()
     option = webdriver.ChromeOptions()
     driver = webdriver.Chrome(service=service, options=option)
-    actions = ActionChains(driver)
     load_dotenv("info.env")
     
     url = "https://estudijas.rtu.lv/"
