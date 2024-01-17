@@ -2,11 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-import openpyxl
+from openpyxl import Workbook
 from dotenv import load_dotenv, set_key
 import getpass
 import os
 import time
+from datetime import datetime
 
 def calenderScrape():
     service = Service()
@@ -30,7 +31,7 @@ def calenderScrape():
     
     eventNames = []
     eventTimes = []
-    events = driver.find_elements(By.CSS_SELECTOR, "h6.d-flex.mb-1")
+    events = driver.find_elements(By.CLASS_NAME, "overflow-auto")
 
     for val in events:
         val = val.text
@@ -43,9 +44,8 @@ def calenderScrape():
     tableGen(eventNames, eventTimes)
 
 def tableGen(eventNames, eventTimes):
-    wb = openpyxl.Workbook()
-    wb.save("planned_events.xlsx")
-    ws = wb.get_sheet_by_name("Sheet1")
+    wb = Workbook()
+    ws = wb.active
     
     ws["A1"]="Event name"
     ws["B1"]="End date"
@@ -53,10 +53,60 @@ def tableGen(eventNames, eventTimes):
     row=2
     i=0
     for val in eventNames:
+        date = calculateDate(eventTimes[i])
         ws[f"A{row}"] = val
-        ws[f"B{row}"] = eventTimes[i]
-        ws[f"C{row}"] = "="
+        ws[f"B{row}"] = date
+        if date > datetime.now():
+            ws[f"C{row}"] = f"=B{row}-NOW()"
+        else: 
+            ws[f"C{row}"] = "Past due"
+        row += 1
+        i += 1
+    
+    for row in ws.iter_rows(min_row=2, max_row=ws.max_row+1, min_col=2, max_col=2):
+        for cell in row:
+            cell.number_format = 'DD/MM/YYYY h:mm'
 
+    for row in ws.iter_rows(min_row=2, max_row=ws.max_row+1, min_col=3, max_col=3):
+        for cell in row:
+            cell.number_format = 'd "days" h "hours and" mm "minutes"'
+    
+    columnWidths = {'A': 50, 'B': 20, 'C': 30}
+    for column, width in columnWidths.items():
+        ws.column_dimensions[column].width = width
+
+    wb.save("planned_events.xlsx")
+
+def calculateDate(eventTime):
+    latvianMonths = {
+    'janvāris': 1,
+    'februāris': 2,
+    'marts': 3,
+    'aprīlis': 4,
+    'maijs': 5,
+    'jūnijs': 6,
+    'jūlijs': 7,
+    'augusts': 8,
+    'septembris': 9,
+    'oktobris': 10,
+    'novembris': 11,
+    'decembris': 12
+    }
+    eventTimeTest = eventTime.split(",")
+    if eventTimeTest[0] != "Šodien":
+        eventTime = eventTime.split(", ")
+        eventTime = f"{eventTime[1]}, {eventTime[2]}"
+    datePart, timePart = eventTime.split(", ")
+    if datePart == "Šodien":
+        day = datetime.now().day
+        month = datetime.now().month
+    else:
+        day, monthLatvian = datePart.split('. ')
+        month = latvianMonths[monthLatvian.lower()]
+    year = datetime.now().year
+
+    dateString = f"{int(day):02d}.{month:02d}.{year} {timePart}"
+    return datetime.strptime(dateString, "%d.%m.%Y %H:%M")
 
 def updateKeys():
     print("Invalid login info. Update .env file keys.")
