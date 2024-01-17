@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from openpyxl import Workbook
 from dotenv import load_dotenv, set_key
 import getpass
@@ -8,9 +9,10 @@ import os
 import time
 from datetime import datetime
 
-def calenderScrape():
+def calenderScrape():  #Funkcija atbildīga par informācijas nolasīšanu no mājaslapas un pieslēgšanos ORTUSam
     service = Service()
     option = webdriver.ChromeOptions()
+    option.add_argument("--headless")
     driver = webdriver.Chrome(service=service, options=option)
     load_dotenv("info.env")
     
@@ -39,6 +41,7 @@ def calenderScrape():
             eventTimes.append(val[1])
         except IndexError:
             pass
+    print("Event list scraped.")
     tableGen(eventNames, eventTimes)
 
 def tableGen(eventNames, eventTimes):
@@ -74,6 +77,7 @@ def tableGen(eventNames, eventTimes):
         ws.column_dimensions[column].width = width
 
     wb.save("planned_events.xlsx")
+    print("Excel spreadsheet created.")
 
 def calculateDate(eventTime):
     latvianMonths = {
@@ -117,3 +121,4 @@ def updateKeys():
 
 if __name__ == "__main__":
     calenderScrape()
+    print("Program complete. You can close the program.")
