@@ -9,7 +9,7 @@ import os
 import time
 from datetime import datetime
 
-def calenderScrape():  #Funkcija atbildīga par informācijas nolasīšanu no mājaslapas un pieslēgšanos ORTUSam
+def calenderScrape():
     service = Service()
     option = webdriver.ChromeOptions()
     option.add_argument("--headless")
