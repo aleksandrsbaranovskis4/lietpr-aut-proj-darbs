@@ -8,7 +8,7 @@ import os
 import time
 from datetime import datetime
 
-def calenderScrape():
+def calendarScrape():
     service = Service()
     option = webdriver.ChromeOptions()
     option.add_argument("--headless")
@@ -118,8 +118,8 @@ def updateKeys():
     set_key("info.env", "USER", os.environ["USER"])
     set_key("info.env", "PASS", os.environ["PASS"])
     print("Keys updated.")
-    calenderScrape()
+    calendarScrape()
 
 if __name__ == "__main__":
-    calenderScrape()
+    calendarScrape()
     print("Program complete. You can close the program.")
