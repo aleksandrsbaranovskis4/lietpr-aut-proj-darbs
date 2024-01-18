@@ -16,4 +16,4 @@ Programma tiek izmantota, lai varētu uzzināt visus gaidāmos uzdevumus, projek
 USER='ORTUS lietotājvārds'
 PASS='ORTUS parole'
 ```
-Ja mainīgie `info.env` failā būs nepareizi, tad lietotājam tie caur programmu būs jāatjauno, kas ir vienīgā manuālā saskarsme ar pašu programmu, kas var būt nepieciešama no lietotāja.
+Ja mainīgie `info.env` failā būs nepareizi, tad lietotājam tie caur programmu būs jāatjauno, kas ir vienīgā manuālā saskarsme ar pašu programmu, kas var būt nepieciešama no lietotāja. Drošības nolūkam var pārveidot programmu, lai, vai nu paroles būtu šifrētas, vai nu prasīt lietotājam katru reizi ievadīt lietotājvārdu un paroli, bet tas jauc visu programmas jēgu un tā vairs nav pilnībā automātiska. Ar programmu arī var rasties negaidītas problēmas, jo šobrīd gaidāmo notikumu ir ļoti maz saistībā ar to, ka ir eksāmenu laiks, kas nozīmē, ka citu uzdevumu praktiski nav, un nevar pilnvērtīgi šo programmu iztestēt, tāpēc var būt specgadījumu, par kuriem nav padomāts.
