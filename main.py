@@ -93,13 +93,15 @@ def calculateDate(eventTime):
     'novembris': 11,
     'decembris': 12
     }
-    eventTimeTest = eventTime.split(",")
-    if eventTimeTest[0] != "Šodien":
-        eventTime = eventTime.split(", ")
-        eventTime = f"{eventTime[1]}, {eventTime[2]}"
+    
+    eventTime = eventTime.split(", ")
+    eventTime = f"{eventTime[-2]}, {eventTime[-1]}"
     datePart, timePart = eventTime.split(", ")
     if datePart == "Šodien":
         day = datetime.now().day
+        month = datetime.now().month
+    elif datePart == "Rīt":
+        day = datetime.now().day + 1
         month = datetime.now().month
     else:
         day, monthLatvian = datePart.split('. ')
