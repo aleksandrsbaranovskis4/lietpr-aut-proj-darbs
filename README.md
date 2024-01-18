@@ -11,3 +11,8 @@ Projekta uzdevums bija izveidot programmu, kas ar Selenium bibliotēkas palīdz�
 6. **time**- šī bibliotēka tiek izmatota, lai programma veiktu dažas īsas pauzes **Selenium** automātiskās programmas laikā, lai programmā nerastos kļūdas no tā, ka programma strādā ātrāk nekā tīmeklis spēj ielādēties. Šī bibliotēka tiek izmantota `calendarScrape()` funkcijā;
 7. **os**- šī bibliotēka tiek izmantota, lai piekļūtu un mainītu vides mainīgos, kas atrodas pašā programmā. Šī bibliotēka tiek izmantota `calendarScrape()` un `updateKeys()` funkcijās.
 ### Programmatūras izmantošanas metodes
+Programma tiek izmantota, lai varētu uzzināt visus gaidāmos uzdevumus, projektus, testus utt. un to termiņus bez vajadzības pašam katru reizi manuāli ierakstīties ORTUSā, kas var aizņemt kādu laiku. Tā kā programma ir pilnīgā automātiska, tad lielāko daļu gadījumu pašam manuāli ievadīt neko nevajag. Viena lieta, kas lietotājām manuāli ir jāizveido `info.env` fails, kurā atrodas šādi mainīgie:
+```
+USER='ORTUS lietotājvārds'
+PASS='ORUTS parole'
+```
